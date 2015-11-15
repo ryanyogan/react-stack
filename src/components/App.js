@@ -5,7 +5,7 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       messages: [
-        'hi there how are you?',
+        'hey there how are you?',
         'I am fine, and you?'
       ]
     };
@@ -14,7 +14,7 @@ export default class App extends React.Component {
   render() {
     const messageNodes = this.state.messages.map((message, idx) => {
       return (
-        <div key={idx}>{message}</div>
+        <div key={idx} style={{color: 'red'}}>{message}</div>
       );
     });
 
