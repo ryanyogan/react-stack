@@ -14,7 +14,7 @@ export default class App extends React.Component {
   render() {
     const messageNodes = this.state.messages.map((message, idx) => {
       return (
-        <div key={idx} style={{color: 'red'}}>{message}</div>
+        <div key={idx}>{message}</div>
       );
     });
 
