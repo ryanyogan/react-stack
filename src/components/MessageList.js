@@ -1,20 +1,33 @@
 import React from 'react';
+import Firebase from 'firebase';
+import _ from 'lodash';
+
 import Message from './Message';
+
 import { Card, List } from 'material-ui';
 
-export default class MessageList extends React.Component {
+class MessageList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      messages: [
-        'hey there how are you?',
-        'I am fine, and you?'
-      ]
+      messages: {}
     };
+
+    this.firebaseRef = new Firebase('https://react-stack-token.firebaseio.com/messages/');
+    this.firebaseRef.on("child_added", (msg) => {
+      if (this.state.messages[msg.key()]) {
+        return;
+      }
+
+      let msgVal = msg.val();
+      msgVal.key = msg.key();
+      this.state.messages[msgVal.key] = msgVal;
+      this.setState({messages: this.state.messages});
+    });
   }
 
   render() {
-    const messageNodes = this.state.messages.map((message, idx) => {
+    const messageNodes = _.values(this.state.messages).map((message, idx) => {
       return (
         <Message key={idx} message={message} />
       );
@@ -32,3 +45,5 @@ export default class MessageList extends React.Component {
     );
   }
 }
+
+export default MessageList;
